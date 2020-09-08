@@ -7,7 +7,7 @@ const Menu = () => {
 	return (
 		<View style={localeStyles.container}>
 			<HeaderLine />
-			<Text>Header</Text>
+			<Text>Menu</Text>
 		</View>
 	);
 };

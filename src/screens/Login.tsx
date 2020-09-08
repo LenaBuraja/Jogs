@@ -7,7 +7,7 @@ const Login = () => {
 	return (
 		<View style={localeStyles.container}>
 			<HeaderLine />
-			<Text>Header</Text>
+			<Text>Login</Text>
 		</View>
 	);
 };
