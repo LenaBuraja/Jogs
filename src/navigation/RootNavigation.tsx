@@ -18,11 +18,14 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="LoginScreen">
+	 <Stack.Navigator
+		initialRouteName="LoginScreen"
+		screenOptions={{ headerShown: false }}
+	>
       <Stack.Screen
         key="Login"
         name="LoginScreen"
-        component={Login}
+		  component={Login}
         options={{ title: 'Login' }}
       />
       <Stack.Screen
@@ -31,9 +34,24 @@ const RootNavigator = () => {
         component={ListJogs}
         options={{ title: 'Jogs' }}
       />
-      <Stack.Screen key="CreateJogs" name="CreateJogsScreen" component={CreateJogs} options={{ title: 'Create/Update' }} />
-      <Stack.Screen key="Info" name="InfoScreen" component={Info} options={{ title: 'Info' }} />
-      <Stack.Screen key="Menu" name="MenuScreen" component={Menu} options={{ title: 'Venu' }} />
+      <Stack.Screen
+			key="CreateJogs"
+			name="CreateJogsScreen"
+			component={CreateJogs}
+			options={{ title: 'Create/Update' }}
+		/>
+      <Stack.Screen
+			key="Info"
+			name="InfoScreen"
+			component={Info}
+			options={{ title: 'Info' }}
+		/>
+      <Stack.Screen
+			key="Menu"
+			name="MenuScreen"
+			component={Menu}
+			options={{ title: 'Menu' }}
+		/>
     </Stack.Navigator>
   );
 };
