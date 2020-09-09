@@ -12,7 +12,7 @@ const HeaderLine = ({isMenuScreen, onPress}: {isMenuScreen: boolean, onPress: ()
 			<TouchableOpacity
 				onPress={onPress}
 			>
-				<Icon name={isMenuScreen ? 'close' : 'menu'} size={24} color={isMenuScreen ? '#888' : '#fff'} />
+				<Icon name={isMenuScreen ? 'close' : 'menu'} size={30} color={isMenuScreen ? '#888' : '#fff'} />
 			</TouchableOpacity>
 		</View>
 	);
