@@ -1,12 +1,16 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { HeaderLine } from '../../components/HeaderLine';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigation/RootNavigation';
 
-const CreateJogs = () => {
+type Props = StackScreenProps<RootStackParamList, 'LoginScreen'>;
+
+const CreateJogs = ({navigation} : Props) => {
 
 	return (
 		<View style={localeStyles.container}>
-			<HeaderLine />
+			<HeaderLine isMenuScreen={false} onPress={() => navigation.navigate('MenuScreen')} />
 			<Text>Create or update jog</Text>
 		</View>
 	);

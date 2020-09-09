@@ -1,12 +1,16 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { HeaderLine } from '../components/HeaderLine';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigation/RootNavigation';
 
-const Info = () => {
+type Props = StackScreenProps<RootStackParamList, 'InfoScreen'>;
+
+const Info = ({navigation} : Props) => {
 
 	return (
 		<View style={localeStyles.container}>
-			<HeaderLine />
+			<HeaderLine isMenuScreen={false} onPress={() => navigation.navigate('MenuScreen')} />
 			<Text style={localeStyles.title}>Header</Text>
 			<Text>
 				Lorem Ipsum is simply dummy text of the printing and typesetting industry. 

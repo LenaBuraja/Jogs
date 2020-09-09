@@ -11,16 +11,18 @@ type Props = StackScreenProps<RootStackParamList, 'LoginScreen'>;
 const Login = ({navigation} : Props) => {
 
 	return (
-		<View style={localeStyles.container}>
-			<HeaderLine />
-			<Image source={BearHead} style={{height: 100, resizeMode: 'contain'}} />
-			<TouchableOpacity
-				style={localeStyles.button}
-				onPress={() => navigation.navigate('JogsScreen')}
-			>
-				<Text style={localeStyles.text}>Let me in</Text>
-			</TouchableOpacity>
-		</View>
+		<>
+			<HeaderLine isMenuScreen={false} onPress={() => navigation.navigate('MenuScreen')} />
+			<View style={localeStyles.container}>
+				<Image source={BearHead} style={{height: 100, resizeMode: 'contain'}} />
+				<TouchableOpacity
+					style={localeStyles.button}
+					onPress={() => navigation.navigate('JogsScreen')}
+				>
+					<Text style={localeStyles.text}>Let me in</Text>
+				</TouchableOpacity>
+			</View>
+		</>
 	);
 };
 
