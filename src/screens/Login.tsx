@@ -14,7 +14,7 @@ const Login = ({navigation} : Props) => {
 		<>
 			<HeaderLine isMenuScreen={false} onPress={() => navigation.navigate('MenuScreen')} />
 			<View style={localeStyles.container}>
-				<Image source={BearHead} style={{height: 100, resizeMode: 'contain'}} />
+				<Image source={BearHead} style={localeStyles.image} />
 				<TouchableOpacity
 					style={localeStyles.button}
 					onPress={() => navigation.navigate('JogsScreen')}
@@ -38,8 +38,17 @@ const localeStyles = StyleSheet.create({
 		borderColor: '#e990f9',
 		justifyContent: 'center',
 	},
+	image: {
+		height: 160,
+		width: 150,
+		resizeMode: 'contain',
+	},
 	container: {
-		padding: 0,
+		flex: 1,
+		display: 'flex',
+		justifyContent: 'space-evenly',
+		alignItems: 'center',
+		backgroundColor: '#fff'
 	},
 	text: {
 		fontFamily: 'SFUIText',
