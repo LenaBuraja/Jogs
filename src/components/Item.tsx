@@ -44,7 +44,6 @@ const localeStyles = StyleSheet.create({
 	},
 	text: {
 		paddingBottom: 10,
-		fontFamily: 'SFUIText',
 		fontSize: 14,
 		fontStyle: 'normal',
 		letterSpacing: 0,

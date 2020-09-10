@@ -21,14 +21,12 @@ const localeStyles = StyleSheet.create({
 		paddingBottom: 4,
 	},
 	textKey: {
-		fontFamily: 'SFUIText',
 		fontSize: 14,
 		fontWeight: '500',
 		fontStyle: 'normal',
 		letterSpacing: 0,
 	},
 	textValue: {
-		fontFamily: 'SFUIText',
 		fontSize: 14,
 		fontStyle: 'normal',
 		letterSpacing: 0,

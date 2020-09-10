@@ -41,7 +41,6 @@ const localeStyles = StyleSheet.create({
 		backgroundColor: '#fff',
 	},
 	title: {
-		fontFamily: "SFUIText",
 		fontSize: 25,
 		fontWeight: "bold",
 		fontStyle: "normal",
@@ -50,7 +49,6 @@ const localeStyles = StyleSheet.create({
 	},
 	text: {
 		paddingBottom: 50,
-		fontFamily: "SFUIText",
 		fontSize: 12,
 		fontWeight: "normal",
 		fontStyle: "normal",

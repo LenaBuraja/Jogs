@@ -43,13 +43,9 @@ const localeStyles = StyleSheet.create({
 	},
 	container: {
 		flex: 1,
-		//display: 'flex',
-		//justifyContent: 'space-around',
-		//alignItems: 'center',
 		backgroundColor: '#fff',
 	},
 	item: {
-		fontFamily: 'SFUIText',
 		fontSize: 25,
 		fontWeight: 'bold',
 		fontStyle: 'normal',

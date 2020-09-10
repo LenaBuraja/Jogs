@@ -60,7 +60,7 @@ const ListJogs = ({navigation} : Props) => {
 							size={47}
 							color={'#7ed321'}
 							onPress={() => navigation.navigate('CreateJogsScreen')}
-							style={localeStyles.icon}
+							containerStyle={localeStyles.icon}
 						/>
 					</ScrollView>
 				}
@@ -89,7 +89,7 @@ const localeStyles = StyleSheet.create({
 	},
 	icon: {
 		padding: 30,
-		alignItems: 'flex-end',
+		alignSelf: 'flex-end',
 	},
 	image: {
 		height: 85,
@@ -109,7 +109,6 @@ const localeStyles = StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	text: {
-		fontFamily: "SFUIText",
 		fontSize: 24,
 		fontWeight: "normal",
 		fontStyle: "normal",
@@ -118,7 +117,6 @@ const localeStyles = StyleSheet.create({
 	},
 	textButton: {
 		paddingHorizontal: 34,
-		fontFamily: 'SFUIText',
 		fontSize: 18,
 		fontWeight: 'bold',
 		fontStyle: 'normal',
