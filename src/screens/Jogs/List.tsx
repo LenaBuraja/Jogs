@@ -51,7 +51,7 @@ const ListJogs = ({navigation} : Props) => {
 						<View style={localeStyles.list}>
 							{
 								jogs.map(jog => {
-									return <Item item={jog} onPress={() => {}}/>
+									return <Item item={jog} onPress={() => navigation.navigate('CreateJogsScreen', {jog})}/>
 								})
 							}
 						</View>
@@ -59,7 +59,7 @@ const ListJogs = ({navigation} : Props) => {
 							name={'add-circle-outline'}
 							size={47}
 							color={'#7ed321'}
-							onPress={() => navigation.navigate('CreateJogsScreen')}
+							onPress={() => navigation.navigate('CreateJogsScreen', {})}
 							containerStyle={localeStyles.icon}
 						/>
 					</ScrollView>

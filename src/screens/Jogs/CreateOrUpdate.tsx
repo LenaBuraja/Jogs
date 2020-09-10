@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
 import { HeaderLine } from '../../components/HeaderLine';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -6,13 +6,22 @@ import { RootStackParamList } from '../../navigation/RootNavigation';
 import { Icon } from 'react-native-elements';
 import { Input } from '../../components/Input';
 
-type Props = StackScreenProps<RootStackParamList, 'LoginScreen'>;
+type Props = StackScreenProps<RootStackParamList, 'CreateJogsScreen'>;
 
-const CreateJogs = ({navigation} : Props) => {
+const CreateJogs = ({route, navigation} : Props) => {
 	const [time, setTime] = useState<number>();
 	const [distance, setDistance] = useState<number>();
 	const [date, setDate] = useState<string>();
 	const [speed, setSpeed] = useState<number>();
+
+	useEffect(() => {
+		if (route.params.jog) {
+			setDate(route.params.jog.date);
+			setTime(route.params.jog.time);
+			setDistance(route.params.jog.distance);
+			setSpeed(route.params.jog.speed);
+		}
+	}, [route.params]);
 
 	return (
 		<>

@@ -5,11 +5,14 @@ import { ListJogs } from '../screens/Jogs/List';
 import { Info } from '../screens/Info';
 import { Menu } from '../screens/Menu';
 import { CreateJogs } from '../screens/Jogs/CreateOrUpdate';
+import { IJog } from '../model';
 
 export type RootStackParamList = {
 	LoginScreen: undefined;
 	JogsScreen: undefined;
-	CreateJogsScreen: undefined;
+	CreateJogsScreen: {
+		jog?: IJog;
+	};
 	InfoScreen: undefined;
 	MenuScreen: undefined;
 };
