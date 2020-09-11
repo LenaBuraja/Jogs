@@ -22,6 +22,7 @@ const Menu = ({navigation} : Props) => {
 				{
 					list.map((item, idx) => {
 						return <TouchableOpacity
+							key={idx}
 							onPress={() => navigation.navigate(item.navigate)}
 							style={localeStyles.button}
 						>

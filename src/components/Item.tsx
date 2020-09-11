@@ -15,7 +15,7 @@ const Item = ({item, onPress}: {item: IJog, onPress: () => void}) => {
 			<Image source={IconRun} style={localeStyles.image} />
 			<View style={localeStyles.container}>
 				<Text style={localeStyles.text}>{item.date}</Text>
-				<FieldView title={'Speed'} value={item.speed}/>
+				<FieldView title={'Speed'} value={Math.round(item.distance/item.time)}/>
 				<FieldView title={'Distance'} value={item.distance} ancillary={'km'}/>
 				<FieldView title={'Time'} value={item.time} ancillary={'min'}/>
 			</View>

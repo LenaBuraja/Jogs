@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Alert, Platform } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { HeaderLine } from '../../components/HeaderLine';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/RootNavigation';
@@ -26,39 +26,40 @@ const CreateJogs = ({route, navigation} : Props) => {
 		<>
 			<HeaderLine isMenuScreen={false} onPress={() => navigation.navigate('MenuScreen')} />
 			<View style={localeStyles.container}>
-				<View style={localeStyles.form}>
-					<Icon
-						name={'close'}
-						size={24}
-						color={'#fff'}
-						containerStyle={localeStyles.icon}
-						onPress={() => navigation.goBack()}
-					/>
-					<Input
-						label='Distance'
-						value={distance ?? ''}
-						onChange={(value) => value === '' ? setDistance(undefined) : !Number.isNaN(Number(value)) ? setDistance(Number(value)) : undefined }
-					/>
-					<Input
-						label='Time'
-						value={time ?? ''}
-						onChange={(value) => value === '' ? setTime(undefined) : !Number.isNaN(Number(value)) ? setTime(Number(value)) : undefined }
-					/>
-					<DatePicker value={date} onChange={setDate} />
-					<TouchableOpacity
-						style={localeStyles.button}
-						onPress={() => {
-							if (time !== undefined && distance !== undefined && date && date !== '') {
-								navigation.goBack();
-							} else {
-								Alert.alert('Warning!', 'Fill in all the fields.', [{ text: 'Close', onPress: () => ({}) }]);
-							}
-						}}
-					>
-						<Text style={localeStyles.text}>Save</Text>
-					</TouchableOpacity>
-
-				</View>
+				<ScrollView>
+					<View style={localeStyles.form}>
+						<Icon
+							name={'close'}
+							size={24}
+							color={'#fff'}
+							containerStyle={localeStyles.icon}
+							onPress={() => navigation.goBack()}
+						/>
+						<Input
+							label='Distance'
+							value={distance ?? ''}
+							onChange={(value) => value === '' ? setDistance(undefined) : !Number.isNaN(Number(value)) ? setDistance(Number(value)) : undefined }
+						/>
+						<Input
+							label='Time'
+							value={time ?? ''}
+							onChange={(value) => value === '' ? setTime(undefined) : !Number.isNaN(Number(value)) ? setTime(Number(value)) : undefined }
+						/>
+						<DatePicker value={date} onChange={setDate} />
+						<TouchableOpacity
+							style={localeStyles.button}
+							onPress={() => {
+								if (time !== undefined && distance !== undefined && date && date !== '') {
+									navigation.goBack();
+								} else {
+									Alert.alert('Warning!', 'Fill in all the fields.', [{ text: 'Close', onPress: () => ({}) }]);
+								}
+							}}
+						>
+							<Text style={localeStyles.text}>Save</Text>
+						</TouchableOpacity>
+					</View>
+				</ScrollView>
 			</View>
 		</>
 	);

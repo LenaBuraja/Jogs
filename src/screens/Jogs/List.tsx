@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { HeaderLine } from '../../components/HeaderLine';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/RootNavigation';
@@ -8,6 +8,7 @@ import iconNothing from '../../assets/sadRoundedSquareEmoticon@2x.png';
 import { IJog } from '../../model';
 import { Item } from '../../components/Item';
 import { Icon } from 'react-native-elements';
+import { useScrollToTop } from '@react-navigation/native';
 
 type Props = StackScreenProps<RootStackParamList, 'JogsScreen'>;
 
@@ -24,8 +25,49 @@ const ListJogs = ({navigation} : Props) => {
 			date: '09.09.2020',
 			distance: 10,
 			time: 60,
+		},
+		{
+			id: '2',
+			date: '09.09.2020',
+			distance: 10,
+			time: 60,
+		},
+		{
+			id: '3',
+			date: '09.09.2020',
+			distance: 10,
+			time: 60,
+		},
+		{
+			id: '4',
+			date: '09.09.2020',
+			distance: 10,
+			time: 60,
+		},
+		{
+			id: '5',
+			date: '09.09.2020',
+			distance: 10,
+			time: 60,
+		},
+		{
+			id: '6',
+			date: '09.09.2020',
+			distance: 10,
+			time: 60,
+		},
+		{
+			id: '7',
+			date: '09.09.2020',
+			distance: 10,
+			time: 60,
 		}
 	];
+
+	const ref = React.useRef<FlatList<IJog>>(null);
+	useScrollToTop(ref);
+ 
+	const renderItem = ({jog}: {jog: IJog}) => (<Item item={jog} onPress={() => navigation.navigate('CreateJogsScreen', {jog})}/>);
 
 	return (
 		<>
@@ -45,22 +87,23 @@ const ListJogs = ({navigation} : Props) => {
 							<Text style={localeStyles.textButton}>Create your jog first</Text>
 						</TouchableOpacity>
 					</View>
-					: <ScrollView contentContainerStyle={[localeStyles.emotyList, localeStyles.placeIcon]}>
-						<View style={localeStyles.list}>
-							{
-								jogs.map(jog => {
-									return <Item item={jog} onPress={() => navigation.navigate('CreateJogsScreen', {jog})}/>
-								})
-							}
-						</View>
-						<Icon
-							name={'add-circle-outline'}
-							size={47}
-							color={'#7ed321'}
-							onPress={() => navigation.navigate('CreateJogsScreen', {})}
-							containerStyle={localeStyles.icon}
+					: <>
+						<FlatList
+							ref={ref}
+							data={jogs}
+							keyExtractor={(_, i) => String(i)}
+							renderItem={({item}) => renderItem({jog: item})}
+							ListEmptyComponent={<Text>Ничего не выбрано</Text>}
 						/>
-					</ScrollView>
+						<View style={localeStyles.icon}>
+							<Icon
+								name={'add-circle-outline'}
+								size={47}
+								color={'#7ed321'}
+								onPress={() => navigation.navigate('CreateJogsScreen', {})}
+							/>
+						</View>
+					</>
 				}
 			</View>
 		</>
@@ -86,7 +129,8 @@ const localeStyles = StyleSheet.create({
 		backgroundColor: '#fff',
 	},
 	icon: {
-		padding: 30,
+		paddingBottom: 30,
+		paddingRight: 30,
 		alignSelf: 'flex-end',
 	},
 	image: {

@@ -62,6 +62,7 @@ const localeStyles = StyleSheet.create({
 		borderStyle: "solid",
 		borderWidth: 1,
 		padding: 10,
+		paddingVertical: 15,
 	},
 	label: {
 		color: '#000',
