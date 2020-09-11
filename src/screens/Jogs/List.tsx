@@ -16,14 +16,12 @@ const ListJogs = ({navigation} : Props) => {
 		{
 			id: '0',
 			date: '09.09.2020',
-			speed: 15,
 			distance: 10,
 			time: 60,
 		},
 		{
 			id: '1',
 			date: '09.09.2020',
-			speed: 15,
 			distance: 10,
 			time: 60,
 		}

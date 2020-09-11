@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Alert, Platform } from 'react-native';
 import { HeaderLine } from '../../components/HeaderLine';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/RootNavigation';
 import { Icon } from 'react-native-elements';
 import { Input } from '../../components/Input';
+import { DatePicker } from '../../components/DatePicker';
 
 type Props = StackScreenProps<RootStackParamList, 'CreateJogsScreen'>;
 
@@ -12,14 +13,12 @@ const CreateJogs = ({route, navigation} : Props) => {
 	const [time, setTime] = useState<number>();
 	const [distance, setDistance] = useState<number>();
 	const [date, setDate] = useState<string>();
-	const [speed, setSpeed] = useState<number>();
-
+ 
 	useEffect(() => {
 		if (route.params.jog) {
 			setDate(route.params.jog.date);
 			setTime(route.params.jog.time);
 			setDistance(route.params.jog.distance);
-			setSpeed(route.params.jog.speed);
 		}
 	}, [route.params]);
 
@@ -45,20 +44,11 @@ const CreateJogs = ({route, navigation} : Props) => {
 						value={time ?? ''}
 						onChange={(value) => value === '' ? setTime(undefined) : !Number.isNaN(Number(value)) ? setTime(Number(value)) : undefined }
 					/>
-					<Input
-						label='Speed'
-						value={speed ?? ''}
-						onChange={(value) => value === '' ? setSpeed(undefined) : !Number.isNaN(Number(value)) ? setSpeed(Number(value)) : undefined }
-					/>
-					<Input
-						label='Date'
-						value={date ?? ''}
-						onChange={setDate}
-					/>
+					<DatePicker value={date} onChange={setDate} />
 					<TouchableOpacity
 						style={localeStyles.button}
 						onPress={() => {
-							if (speed !== undefined && time !== undefined && distance !== undefined && date && date !== '') {
+							if (time !== undefined && distance !== undefined && date && date !== '') {
 								navigation.goBack();
 							} else {
 								Alert.alert('Warning!', 'Fill in all the fields.', [{ text: 'Close', onPress: () => ({}) }]);

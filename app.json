@@ -4,9 +4,9 @@
     "slug": "Jogs",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "src/assets/bearFace@2x.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "src/assets/bearFace@2x.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,7 +20,7 @@
       "supportsTablet": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "src/assets/bearFace@2x.png"
     }
   }
 }
