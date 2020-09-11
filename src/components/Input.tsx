@@ -10,6 +10,7 @@ const Input = ({label, value, onChange}: {label: string, value: string | number,
 				<TextInput
 					value={value.toString()}
 					onChangeText={onChange}
+					keyboardType='decimal-pad'
 				/>
 			</View>
 		</View>
