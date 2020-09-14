@@ -101,7 +101,7 @@ const ListJogs = ({navigation} : Props) => {
 					: <>
 					{
 						isFilter
-						? <View>
+						? <View style={localeStyles.filterContainer}>
 							<DatePickerField
 								label='Date from'
 								value={dateStart}
@@ -114,7 +114,7 @@ const ListJogs = ({navigation} : Props) => {
 							/>
 							<Icon
 								name={'close'}
-								size={47}
+								size={35}
 								color={'#7ed321'}
 								onPress={() => {
 									setDateStart(undefined);
@@ -174,6 +174,17 @@ const localeStyles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff',
 	},
+	emotyList: {
+		flex: 1,
+	},
+	filterContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		padding: 25,
+		backgroundColor: '#eaeaea',
+	},
 	icon: {
 		paddingBottom: 30,
 		paddingRight: 30,
@@ -183,9 +194,6 @@ const localeStyles = StyleSheet.create({
 		height: 85,
 		width: 85,
 		resizeMode: 'contain',
-	},
-	emotyList: {
-		flex: 1,
 	},
 	list: {
 		flexDirection: 'column',
