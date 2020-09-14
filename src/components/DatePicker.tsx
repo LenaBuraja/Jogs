@@ -3,9 +3,9 @@ import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native
 import DateTimePicker  from '@react-native-community/datetimepicker';
 import { Input } from './Input';
 
-const DatePickerField = ({label, value, isEnter, onChange}: {label: string, value?: string, isEnter?: boolean, onChange: (text: string) => void}) => {
+const DatePickerField = React.memo(({label, value, isEnter, onChange}: {label: string, value?: string, isEnter?: boolean, onChange: (text: string) => void}) => {
 
-	const [date, setDate] = useState(value ? new Date(value) : isEnter ? new Date() : undefined);
+	const [date, setDate] = useState<Date>();
 	const [show, setShow] = useState(false);
 	const [dateString, setDateString] = useState<string>('');
  
@@ -18,6 +18,10 @@ const DatePickerField = ({label, value, isEnter, onChange}: {label: string, valu
 	const showDatepicker = () => {
 	  setShow(true);
 	};
+
+	useEffect(() => {
+		setDate(value ? new Date(value) : isEnter ? new Date() : undefined);
+	}, [value]);
 
 	useEffect(() => {
 		setDateString(date ? `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}` : '');
@@ -50,7 +54,7 @@ const DatePickerField = ({label, value, isEnter, onChange}: {label: string, valu
 			)}
 		</View>
 	);
-};
+});
 
 export { DatePickerField };
 

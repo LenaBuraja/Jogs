@@ -10,64 +10,44 @@ import { Item } from '../../components/Item';
 import { Icon } from 'react-native-elements';
 import { useScrollToTop } from '@react-navigation/native';
 import { DatePickerField } from '../../components/DatePicker';
+import { PATH, ROUTE_DATA } from '../../helpers/path';
 
 type Props = StackScreenProps<RootStackParamList, 'JogsScreen'>;
 
 const ListJogs = ({navigation} : Props) => {
-	const jogs: IJog[] = [
-		{
-			id: '0',
-			date: '09.09.2020',
-			distance: 10,
-			time: 60,
-		},
-		{
-			id: '1',
-			date: '08.09.2020',
-			distance: 10,
-			time: 60,
-		},
-		{
-			id: '2',
-			date: '2.09.2020',
-			distance: 10,
-			time: 60,
-		},
-		{
-			id: '3',
-			date: '09.02.2020',
-			distance: 10,
-			time: 60,
-		},
-		{
-			id: '4',
-			date: '09.09.2020',
-			distance: 10,
-			time: 60,
-		},
-		{
-			id: '5',
-			date: '09.12.2020',
-			distance: 10,
-			time: 60,
-		},
-		{
-			id: '6',
-			date: '09.10.2020',
-			distance: 10,
-			time: 60,
-		},
-		{
-			id: '7',
-			date: '09.09.2018',
-			distance: 10,
-			time: 60,
-		}
-	];
-
+	const [jogs, setJogs] = useState<IJog[]>([]);
 	const [isFilter, setIsFilter] = useState(false);
 	const [dateStart, setDateStart] = useState<string>();
 	const [dateEnd, setDateEnd] = useState<string>();
+
+	useEffect(() => {
+		const getData = async () => {
+			const response = await fetch(
+				`${PATH}${ROUTE_DATA}/sync`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json',
+						'Authorization': 'Bearer 45854e03b4211f26a8e1b67efdcbd317ce1404f4878b540fd0848dd3602eb5cb'
+					},
+					credentials: 'include',
+				 }
+				).then(res => res.json())
+				.then(res => {
+					if(res.error_message) {
+						console.log('Error!', res.error_message.error);
+					} else if (res.response) {
+						setJogs(res.response.jogs);
+					} else {
+						console.log('Error!', '');
+					}
+					return res;
+				});
+		};
+
+		getData();
+	}, []);
 
 	const ref = React.useRef<FlatList<IJog>>(null);
 	useScrollToTop(ref);
@@ -87,7 +67,7 @@ const ListJogs = ({navigation} : Props) => {
 				{
 					jogs.length === 0
 					? <View style={[localeStyles.list, localeStyles.emotyList]}>
-						<View style={localeStyles.list}>
+						<View style={localeStyles.nothingContainer}>
 							<Image source={iconNothing} style={localeStyles.image} />
 							<Text style={[localeStyles.text, localeStyles.colorGrey, localeStyles.paddingTop30]}>Nothing is there</Text>
 						</View>
@@ -129,12 +109,11 @@ const ListJogs = ({navigation} : Props) => {
 							ref={ref}
 							data={jogs.filter((jog) =>
 								{
-									const currDate = (jog.date).split('.').map((item) => Number(item)).reverse();
 									const currDateStart = dateStart ? (dateStart).split('.').map((item) => Number(item)).reverse() : undefined;
-									const currDateEnd = dateEnd ? (jog.date).split('.').map((item) => Number(item)).reverse() : undefined;
+									const currDateEnd = dateEnd ? (dateEnd).split('.').map((item) => Number(item)).reverse() : undefined;
 									return (!currDateStart
-									|| (new Date(currDate[0], currDate[1], currDate[2]).getTime() >= new Date(currDateStart[0], currDateStart[1], currDateStart[2]).getTime())
-									&& (!currDateEnd || new Date(currDate[0], currDate[1], currDate[2]).getTime() <= new Date(currDateEnd[0], currDateEnd[1], currDateEnd[2]).getTime()))
+									|| (jog.date >= new Date(currDateStart[0], currDateStart[1], currDateStart[2]).getTime())
+									&& (!currDateEnd || jog.date <= new Date(currDateEnd[0], currDateEnd[1], currDateEnd[2]).getTime()))
 								})
 							}
 							keyExtractor={(_, i) => String(i)}
@@ -176,6 +155,8 @@ const localeStyles = StyleSheet.create({
 	},
 	emotyList: {
 		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'space-evenly',
 	},
 	filterContainer: {
 		display: 'flex',
@@ -197,6 +178,10 @@ const localeStyles = StyleSheet.create({
 	},
 	list: {
 		flexDirection: 'column',
+	},
+	nothingContainer: {
+		alignItems: 'center',
+		paddingVertical: 10,
 	},
 	paddingTop30: {
 		paddingTop: 30,

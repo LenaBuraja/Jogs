@@ -1,6 +1,6 @@
 export interface IJog {
-	id: string;
-	date: string;
+	id: number;
+	date: number;
 	time: number;
 	distance: number;
 }

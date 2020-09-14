@@ -6,6 +6,7 @@ import { IJog } from '../model';
 import { FieldView } from './FieldView';
 
 const Item = ({item, onPress}: {item: IJog, onPress: () => void}) => {
+	const date = new Date(item.date);
 
 	return (
 		<TouchableOpacity
@@ -14,7 +15,7 @@ const Item = ({item, onPress}: {item: IJog, onPress: () => void}) => {
 		>
 			<Image source={IconRun} style={localeStyles.image} />
 			<View style={localeStyles.container}>
-				<Text style={localeStyles.text}>{item.date}</Text>
+				<Text style={localeStyles.text}>{`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`}</Text>
 				<FieldView title={'Speed'} value={(item.distance/item.time).toFixed(2)}/>
 				<FieldView title={'Distance'} value={item.distance} ancillary={'km'}/>
 				<FieldView title={'Time'} value={item.time} ancillary={'min'}/>

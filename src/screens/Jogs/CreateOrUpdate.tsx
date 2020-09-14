@@ -16,11 +16,15 @@ const CreateJogs = ({route, navigation} : Props) => {
  
 	useEffect(() => {
 		if (route.params.jog) {
-			setDate(route.params.jog.date);
+			setDate(new Date(route.params.jog.date).toISOString());
 			setTime(route.params.jog.time);
 			setDistance(route.params.jog.distance);
 		}
 	}, [route.params]);
+
+	useEffect(() => {
+		console.log(date)
+	}, [date]);
 
 	return (
 		<>
