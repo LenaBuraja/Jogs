@@ -3,9 +3,9 @@ import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native
 import DateTimePicker  from '@react-native-community/datetimepicker';
 import { Input } from './Input';
 
-const DatePicker = ({value, onChange}: {value?: string, onChange: (text: string) => void}) => {
+const DatePickerField = ({label, value, isEnter, onChange}: {label: string, value?: string, isEnter?: boolean, onChange: (text: string) => void}) => {
 
-	const [date, setDate] = useState(value ? new Date(value) : new Date());
+	const [date, setDate] = useState(value ? new Date(value) : isEnter ? new Date() : undefined);
 	const [show, setShow] = useState(false);
 	const [dateString, setDateString] = useState<string>('');
  
@@ -20,7 +20,7 @@ const DatePicker = ({value, onChange}: {value?: string, onChange: (text: string)
 	};
 
 	useEffect(() => {
-		setDateString(`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`);
+		setDateString(date ? `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}` : '');
 	}, [date]);
 
 	return (
@@ -28,12 +28,12 @@ const DatePicker = ({value, onChange}: {value?: string, onChange: (text: string)
 			{
 				Platform.OS === 'web'
 				? <Input
-					label='Date'
+					label={label}
 					value={dateString}
 					onChange={(text) => { onChange(text); setDateString(text)}}
 				/>
 				: <View>
-					<Text style={localeStyles.label}>Date</Text>
+					<Text style={localeStyles.label}>{label}</Text>
 					<TouchableOpacity style={localeStyles.inputContainer} onPress={showDatepicker}>
 						<Text>{dateString}</Text>
 					</TouchableOpacity>
@@ -41,7 +41,7 @@ const DatePicker = ({value, onChange}: {value?: string, onChange: (text: string)
 			}
 			{show && (
 			<DateTimePicker
-				value={date}
+				value={date ?? new Date()}
 				mode={'date'}
 				is24Hour={true}
 				display="default"
@@ -52,7 +52,7 @@ const DatePicker = ({value, onChange}: {value?: string, onChange: (text: string)
 	);
 };
 
-export { DatePicker };
+export { DatePickerField };
 
 const localeStyles = StyleSheet.create({
 	inputContainer: {

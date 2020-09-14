@@ -5,7 +5,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/RootNavigation';
 import { Icon } from 'react-native-elements';
 import { Input } from '../../components/Input';
-import { DatePicker } from '../../components/DatePicker';
+import { DatePickerField } from '../../components/DatePicker';
 
 type Props = StackScreenProps<RootStackParamList, 'CreateJogsScreen'>;
 
@@ -45,7 +45,7 @@ const CreateJogs = ({route, navigation} : Props) => {
 							value={time ?? ''}
 							onChange={(value) => value === '' ? setTime(undefined) : !Number.isNaN(Number(value)) ? setTime(Number(value)) : undefined }
 						/>
-						<DatePicker value={date} onChange={setDate} />
+						<DatePickerField label={'Date'} value={date} isEnter={true} onChange={setDate} />
 						<TouchableOpacity
 							style={localeStyles.button}
 							onPress={() => {

@@ -9,10 +9,10 @@ type Props = StackScreenProps<RootStackParamList, 'InfoScreen'>;
 const Info = ({navigation} : Props) => {
 
 	return (
-		<>
+		<View style={localeStyles.container}>
 			<HeaderLine isMenuScreen={false} onPress={() => navigation.navigate('MenuScreen')} />
 			<ScrollView>
-				<View style={localeStyles.container}>
+				<View style={localeStyles.padding}>
 					<Text style={localeStyles.title}>INFO</Text>
 					<Text style={[localeStyles.text, localeStyles.separator]}>
 						Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
@@ -30,7 +30,7 @@ const Info = ({navigation} : Props) => {
 					</Text>
 				</View>
 			</ScrollView>
-		</>
+		</View>
 	);
 };
 
@@ -39,8 +39,10 @@ export { Info };
 const localeStyles = StyleSheet.create({
 	container: {
 		flex: 1,
-		padding: 25,
 		backgroundColor: '#fff',
+	},
+	padding: {
+		padding: 25,
 	},
 	title: {
 		fontSize: 25,
