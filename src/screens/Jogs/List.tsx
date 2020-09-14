@@ -23,14 +23,15 @@ const ListJogs = ({navigation} : Props) => {
 
 	useEffect(() => {
 		const getData = async () => {
-			const response = await fetch(
+			const tocken = await localStorage.getItem('Jogs/Authorization');
+			await fetch(
 				`${PATH}${ROUTE_DATA}/sync`,
 				{
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
 						'Accept': 'application/json',
-						'Authorization': 'Bearer 191c650ed307b11cf9d9d52b46f4e98035d0aaadf96ed5ebd218b76ceb5076b5'
+						'Authorization': tocken ?? ''
 					},
 					credentials: 'include',
 				 }
