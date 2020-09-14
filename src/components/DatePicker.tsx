@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native
 import DateTimePicker  from '@react-native-community/datetimepicker';
 import { Input } from './Input';
 
-const DatePickerField = React.memo(({label, value, isEnter, onChange}: {label: string, value?: string, isEnter?: boolean, onChange: (text: string) => void}) => {
+const DatePickerField = ({label, value, onChange}: {label: string, value?: string, onChange: (text: string) => void}) => {
 
 	const [date, setDate] = useState<Date>();
 	const [show, setShow] = useState(false);
@@ -20,7 +20,7 @@ const DatePickerField = React.memo(({label, value, isEnter, onChange}: {label: s
 	};
 
 	useEffect(() => {
-		setDate(value ? new Date(value) : isEnter ? new Date() : undefined);
+		setDate(value ? new Date(value) : undefined);
 	}, [value]);
 
 	useEffect(() => {
@@ -34,7 +34,13 @@ const DatePickerField = React.memo(({label, value, isEnter, onChange}: {label: s
 				? <Input
 					label={label}
 					value={dateString}
-					onChange={(text) => { onChange(text); setDateString(text)}}
+					onChange={(text) => {
+						setDateString(text);
+						if (/^(0?[1-9]|1\d|2\d|3[01])\.(0?[1-9]|1[0-2])\.(19|20)\d{2}$/.test(text)) {
+							const newDate = (text).split('.').map((item) => Number(item)).reverse();
+							onChange(new Date(newDate[0], newDate[1] - 1, newDate[2]).toISOString())
+						}
+					}}
 				/>
 				: <View>
 					<Text style={localeStyles.label}>{label}</Text>
@@ -54,7 +60,7 @@ const DatePickerField = React.memo(({label, value, isEnter, onChange}: {label: s
 			)}
 		</View>
 	);
-});
+};
 
 export { DatePickerField };
 

@@ -8,7 +8,7 @@ import iconNothing from '../../assets/sadRoundedSquareEmoticon@2x.png';
 import { IJog } from '../../model';
 import { Item } from '../../components/Item';
 import { Icon } from 'react-native-elements';
-import { useScrollToTop } from '@react-navigation/native';
+import { useScrollToTop, useIsFocused } from '@react-navigation/native';
 import { DatePickerField } from '../../components/DatePicker';
 import { PATH, ROUTE_DATA } from '../../helpers/path';
 
@@ -19,6 +19,7 @@ const ListJogs = ({navigation} : Props) => {
 	const [isFilter, setIsFilter] = useState(false);
 	const [dateStart, setDateStart] = useState<string>();
 	const [dateEnd, setDateEnd] = useState<string>();
+	const isFocused = useIsFocused();
 
 	useEffect(() => {
 		const getData = async () => {
@@ -29,7 +30,7 @@ const ListJogs = ({navigation} : Props) => {
 					headers: {
 						'Content-Type': 'application/json',
 						'Accept': 'application/json',
-						'Authorization': 'Bearer 45854e03b4211f26a8e1b67efdcbd317ce1404f4878b540fd0848dd3602eb5cb'
+						'Authorization': 'Bearer 191c650ed307b11cf9d9d52b46f4e98035d0aaadf96ed5ebd218b76ceb5076b5'
 					},
 					credentials: 'include',
 				 }
@@ -38,7 +39,8 @@ const ListJogs = ({navigation} : Props) => {
 					if(res.error_message) {
 						console.log('Error!', res.error_message.error);
 					} else if (res.response) {
-						setJogs(res.response.jogs);
+						const data = res.response.jogs.map((item: IJog) => ({...item, date: item.date * 1000}));
+						setJogs(data);
 					} else {
 						console.log('Error!', '');
 					}
@@ -46,8 +48,8 @@ const ListJogs = ({navigation} : Props) => {
 				});
 		};
 
-		getData();
-	}, []);
+		isFocused ? getData() : undefined;
+	}, [isFocused]);
 
 	const ref = React.useRef<FlatList<IJog>>(null);
 	useScrollToTop(ref);
@@ -107,15 +109,11 @@ const ListJogs = ({navigation} : Props) => {
 					}
 						<FlatList
 							ref={ref}
-							data={jogs.filter((jog) =>
-								{
-									const currDateStart = dateStart ? (dateStart).split('.').map((item) => Number(item)).reverse() : undefined;
-									const currDateEnd = dateEnd ? (dateEnd).split('.').map((item) => Number(item)).reverse() : undefined;
-									return (!currDateStart
-									|| (jog.date >= new Date(currDateStart[0], currDateStart[1], currDateStart[2]).getTime())
-									&& (!currDateEnd || jog.date <= new Date(currDateEnd[0], currDateEnd[1], currDateEnd[2]).getTime()))
-								})
-							}
+							data={jogs.filter((jog) => {
+								return (!dateStart
+								|| (jog.date * 100 >= new Date(dateStart).getTime())
+								&& (!dateEnd || jog.date * 100 <= new Date(dateEnd).getTime()))
+							})}
 							keyExtractor={(_, i) => String(i)}
 							renderItem={({item}) => renderItem({jog: item})}
 							ListEmptyComponent={<Text>Ничего не выбрано</Text>}

@@ -3,4 +3,5 @@ export interface IJog {
 	date: number;
 	time: number;
 	distance: number;
+	user_id: string;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { HeaderLine } from '../../components/HeaderLine';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -6,6 +6,7 @@ import { RootStackParamList } from '../../navigation/RootNavigation';
 import { Icon } from 'react-native-elements';
 import { Input } from '../../components/Input';
 import { DatePickerField } from '../../components/DatePicker';
+import { PATH, ROUTE_DATA } from '../../helpers/path';
 
 type Props = StackScreenProps<RootStackParamList, 'CreateJogsScreen'>;
 
@@ -22,9 +23,73 @@ const CreateJogs = ({route, navigation} : Props) => {
 		}
 	}, [route.params]);
 
-	useEffect(() => {
-		console.log(date)
-	}, [date]);
+	const createJog = useCallback(async () => {
+		if(!date) {
+			return;
+		}
+
+		await fetch(
+			`${PATH}${ROUTE_DATA}/jog`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json',
+					'Authorization': 'Bearer 191c650ed307b11cf9d9d52b46f4e98035d0aaadf96ed5ebd218b76ceb5076b5'
+				},
+				credentials: 'include',
+				body: JSON.stringify({
+					time,
+					date: new Date(date).toISOString(),
+					distance,
+				}),
+			}).then(res => res.json())
+			.then(res => {
+				if(res.error_message) {
+					console.log('Error!', res.error_message.error);
+				} else if (res.response) {
+					navigation.navigate('JogsScreen');
+				} else {
+					console.log('Error!', '');
+				}
+				return res;
+			});
+	}, [date, time, distance, PATH, ROUTE_DATA]);
+
+	const updateJog = useCallback(async () => {
+		if(!date || !route.params.jog) {
+			return;
+		}
+
+		await fetch(
+			`${PATH}${ROUTE_DATA}/jog`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json',
+					'Authorization': 'Bearer 191c650ed307b11cf9d9d52b46f4e98035d0aaadf96ed5ebd218b76ceb5076b5'
+				},
+				credentials: 'include',
+				body: JSON.stringify({
+					time,
+					date: new Date(date).toISOString(),
+					distance,
+					jog_id: route.params.jog.id,
+					user_id: route.params.jog.user_id,
+				}),
+			}).then(res => res.json())
+			.then(res => {
+				if(res.error_message) {
+					console.log('Error!', res.error_message.error);
+				} else if (res.response) {
+					navigation.navigate('JogsScreen');
+				} else {
+					console.log('Error!', '');
+				}
+				return res;
+			});
+	}, [date, time, distance, PATH, ROUTE_DATA]);
 
 	return (
 		<>
@@ -49,12 +114,12 @@ const CreateJogs = ({route, navigation} : Props) => {
 							value={time ?? ''}
 							onChange={(value) => value === '' ? setTime(undefined) : !Number.isNaN(Number(value)) ? setTime(Number(value)) : undefined }
 						/>
-						<DatePickerField label={'Date'} value={date} isEnter={true} onChange={setDate} />
+						<DatePickerField label={'Date'} value={date} onChange={setDate} />
 						<TouchableOpacity
 							style={localeStyles.button}
 							onPress={() => {
 								if (time !== undefined && distance !== undefined && date && date !== '') {
-									navigation.goBack();
+									route.params.jog ? updateJog() : createJog();
 								} else {
 									Alert.alert('Warning!', 'Fill in all the fields.', [{ text: 'Close', onPress: () => ({}) }]);
 								}
