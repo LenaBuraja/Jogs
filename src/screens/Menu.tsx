@@ -1,58 +1,32 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { HeaderLine } from '../components/HeaderLine';
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/RootNavigation';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Link } from 'react-router-dom';
+import '../assets/styles/menu.css';
 
-type Props = StackScreenProps<RootStackParamList, 'MenuScreen'>;
-
-const Menu = ({navigation} : Props) => {
+const Menu: React.FunctionComponent<{}> = (props) => {
 
 	const list = [
-		{name: 'JOGS', navigate: 'JogsScreen'},
-		{name: 'INFO', navigate: 'InfoScreen'},
-		{name: 'CONTACT US', navigate: 'MenuScreen'},
+		{name: 'JOGS', navigate: '/jogs'},
+		{name: 'INFO', navigate: '/info'},
+		{name: 'CONTACT US', navigate: '/menu'},
 	]
 
 	return (
-		<View style={localeStyles.container}>
-			<HeaderLine isMenuScreen={true} onPress={() => navigation.goBack()} />
-			<View style={localeStyles.list}>
+		<div className='containerMenu'>
+			<div className='list'>
 				{
 					list.map((item, idx) => {
-						return <TouchableOpacity
+						return <Link
+							to={item.navigate}
 							key={idx}
-							onPress={() => navigation.navigate(item.navigate)}
-							style={localeStyles.button}
+							className='button'
 						>
-							<Text style={[localeStyles.item, {color: idx % 2 === 0 ? '#000': '#7ed321'}]}>{item.name}</Text>
-						</TouchableOpacity>
+							<div className='item' style={{color: idx % 2 === 0 ? '#000': '#7ed321'}}>{item.name}</div>
+						</Link>
 					})
 				}
-			</View>
-		</View>
+			</div>
+		</div>
 	);
 };
 
-export { Menu };
-
-const localeStyles = StyleSheet.create({
-	button: {
-		paddingVertical: 20,
-		alignItems: 'center',
-	},
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-	},
-	item: {
-		fontSize: 25,
-		fontWeight: 'bold',
-		fontStyle: 'normal',
-		letterSpacing: 0,
-	},
-	list: {
-		paddingTop: 50,
-	},
-});
+export default Menu;

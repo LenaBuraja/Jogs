@@ -1,53 +1,29 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 
-import IconRun from '../assets/icon@2x.png';
+import IconRun from '../assets/images/icon@2x.png';
 import { IJog } from '../model';
-import { FieldView } from './FieldView';
+import { FieldView } from './';
+import { Link } from 'react-router-dom';
 
-const Item = ({item, onPress}: {item: IJog, onPress: () => void}) => {
+const Item = ({item}: {item: IJog}) => {
 	const date = new Date(item.date);
 
 	return (
-		<TouchableOpacity
-			style={localeStyles.button}
-			onPress={onPress}
+		<Link
+			to={`/jogs/${item.id}`}
+			className='selectJog'
 		>
-			<Image source={IconRun} style={localeStyles.image} />
-			<View style={localeStyles.container}>
-				<Text style={localeStyles.text}>{`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`}</Text>
-				<FieldView title={'Speed'} value={(item.distance/item.time).toFixed(2)}/>
-				<FieldView title={'Distance'} value={item.distance} ancillary={'km'}/>
-				<FieldView title={'Time'} value={item.time} ancillary={'min'}/>
-			</View>
-		</TouchableOpacity>
+				<img src={IconRun} className='imageJog' />
+				<div>
+					<div className='containerItem'>
+						<div className='textDate'>{`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`}</div>
+						<FieldView title={'Speed'} value={(item.distance/item.time).toFixed(2)}/>
+						<FieldView title={'Distance'} value={item.distance} ancillary={'km'}/>
+						<FieldView title={'Time'} value={item.time} ancillary={'min'}/>
+					</div>
+				</div>
+		</Link>
 	);
 };
 
-export { Item };
-
-const localeStyles = StyleSheet.create({
-	button: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-evenly',
-		alignItems: 'center',
-		padding: 20,
-		borderBottomColor: '#b0b0b0',
-		borderBottomWidth: 1,
-	},
-	image: {
-		height: 87,
-		width: 87,
-		resizeMode: 'contain',
-	},
-	container: {
-	},
-	text: {
-		paddingBottom: 10,
-		fontSize: 14,
-		fontStyle: 'normal',
-		letterSpacing: 0,
-		color: '#808080',
-	},
-});
+export default Item;

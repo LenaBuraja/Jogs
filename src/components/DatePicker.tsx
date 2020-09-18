@@ -1,82 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
-import DateTimePicker  from '@react-native-community/datetimepicker';
-import { Input } from './Input';
+import DatePicker from 'react-datepicker';
 
 const DatePickerField = ({label, value, onChange}: {label: string, value?: string, onChange: (text: string) => void}) => {
 
 	const [date, setDate] = useState<Date>();
-	const [show, setShow] = useState(false);
-	const [dateString, setDateString] = useState<string>('');
- 
-	const onChangeDate = (selectedDate?: Date) => {
-	  const currentDate = selectedDate || date;
-	  setShow(Platform.OS === 'ios');
-	  setDate(currentDate);
-	};
- 
-	const showDatepicker = () => {
-	  setShow(true);
-	};
 
 	useEffect(() => {
 		setDate(value ? new Date(value) : undefined);
 	}, [value]);
 
 	useEffect(() => {
-		setDateString(date ? `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}` : '');
+		if (date) {
+			onChange(date?.toISOString());
+		}
 	}, [date]);
 
 	return (
-		<View>
-			{
-				Platform.OS === 'web'
-				? <Input
-					label={label}
-					value={dateString}
-					onChange={(text) => {
-						setDateString(text);
-						if (/^(0?[1-9]|1\d|2\d|3[01])\.(0?[1-9]|1[0-2])\.(19|20)\d{2}$/.test(text)) {
-							const newDate = (text).split('.').map((item) => Number(item)).reverse();
-							onChange(new Date(newDate[0], newDate[1] - 1, newDate[2]).toISOString())
-						}
-					}}
+		<div>
+			<div className='labelIput'>{label}</div>
+			<div className='datePicker'>
+				<DatePicker
+					dateFormat='dd.MM.yyyy'
+					selected={date}
+					onChange={date => !date ? undefined : Array.isArray(date) ? setDate(date[0]) : setDate(date)}
 				/>
-				: <View>
-					<Text style={localeStyles.label}>{label}</Text>
-					<TouchableOpacity style={localeStyles.inputContainer} onPress={showDatepicker}>
-						<Text>{dateString}</Text>
-					</TouchableOpacity>
-				</View>
-			}
-			{show && (
-			<DateTimePicker
-				value={date ?? new Date()}
-				mode={'date'}
-				is24Hour={true}
-				display="default"
-				onChange={(_, newValue) => onChangeDate(newValue)}
-			/>
-			)}
-		</View>
+			</div>
+		</div>
 	);
 };
 
-export { DatePickerField };
-
-const localeStyles = StyleSheet.create({
-	inputContainer: {
-		backgroundColor: '#fff',
-		borderColor: '#888',
-		borderRadius: 7,
-		borderStyle: "solid",
-		borderWidth: 1,
-		padding: 10,
-		paddingVertical: 15,
-	},
-	label: {
-		color: '#000',
-		fontWeight: 'normal',
-		paddingVertical: 5,
-	},
-});
+export default DatePickerField;

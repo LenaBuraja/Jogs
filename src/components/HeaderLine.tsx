@@ -1,56 +1,66 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Icon } from 'react-native-elements';
-import LogoGreen from '../assets/logoGreen@2x.png';
-import LogoWhite from '../assets/logoWhite@2x.png';
+import React, { useEffect, useState } from 'react';
+import LogoGreen from '../assets/images/logoGreen@2x.png';
+import LogoWhite from '../assets/images/logoWhite@2x.png';
+import IconFilter from '../assets/images/filter@2x.png';
+import IconMenu from '../assets/images/menu@2x.png';
+import IconClose from '../assets/images/inconCloseGrey24.png';
+import { useHistory, withRouter } from 'react-router-dom';
+import { AppState, AppDispatch } from '../store';
+import { connect } from 'react-redux';
+import { RoutePath } from '../route/RootRouter';
+import { JogsModule } from '../modules';
 
-const HeaderLine = ({isMenuScreen, onPress, ancillaryOnPress}: {isMenuScreen: boolean,  onPress: () => void, ancillaryOnPress?: () => void}) => {
+export interface HeaderComponentProps {
+	logged: boolean;
+	filtered: boolean;
+	setFiltered: (value: boolean) => unknown;
+}
+
+const HeaderLineComponent: React.FunctionComponent<HeaderComponentProps> = (props) => {
+	const { logged, filtered} = props;
+	const history = useHistory();
+	const [isMenuScreen, setIsMenuScreen] = useState(false);
+
+	useEffect(() => {
+		setIsMenuScreen(history.location.pathname === RoutePath.MENU);
+	}, [props]);
 
 	return (
-		<View style={[localeStyles.container, { backgroundColor: isMenuScreen ? '#fff' : '#7ed321'}]}>
-			<Image source={isMenuScreen ? LogoGreen : LogoWhite} style={localeStyles.image} />
-			<View style={localeStyles.icons}>
+		<div className='containerHeader' style={{ backgroundColor: isMenuScreen ? '#fff' : '#7ed321'}}>
+			<img src={isMenuScreen ? LogoGreen : LogoWhite} className='image' />
+			<div className='icons'>
 				{
-					ancillaryOnPress
-					? <TouchableOpacity
-							onPress={ancillaryOnPress}
-							style={localeStyles.padding}
+					history.location.pathname === RoutePath.JOGS
+					? <div
+							onClick={() => props.setFiltered(!filtered)}
+							className='paddingRight'
 						>
-							<Icon type='antdesign' name='filter' size={30} color={isMenuScreen ? '#888' : '#fff'} />
-						</TouchableOpacity>
+							<img src={IconFilter} className='iconMenu' />
+						</div>
 					: undefined
 				}
-				<TouchableOpacity
-					onPress={onPress}
-				>
-					<Icon name={isMenuScreen ? 'close' : 'menu'} size={30} color={isMenuScreen ? '#888' : '#fff'} />
-				</TouchableOpacity>
-			</View>
-		</View>
+				{
+					logged
+					? <div
+							onClick={() => isMenuScreen ? history.goBack() : history.push('/menu')}
+						>
+							<img src={isMenuScreen ? IconClose : IconMenu} className='iconMenu' />
+						</div>
+					: undefined
+				}
+			</div>
+		</div>
 	);
 };
 
-export { HeaderLine };
+const HeaderLine = connect(
+	(state: AppState) => ({
+		logged: state.auth.logged,
+		filtered: state.jogs.filtered,
+	}),
+	(dispatch: AppDispatch) => ({
+		setFiltered: (value: boolean) => dispatch(JogsModule.actions.setFiltered(value)),
+	}),
+)(HeaderLineComponent);
 
-const localeStyles = StyleSheet.create({
-	container: {
-		paddingHorizontal: 25,
-		paddingVertical: 20,
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
-	icons: {
-		display: 'flex',
-		flexDirection: 'row',
-	},
-	padding: {
-		paddingRight: 40,
-	},
-	image: {
-		height: 37,
-		width: 98,
-		resizeMode: 'contain',
-	},
-});
+export default withRouter(HeaderLine);

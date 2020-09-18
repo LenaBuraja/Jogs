@@ -1,0 +1,23 @@
+.containerInfo {
+	flex: 1;
+	background-color: #fff;
+};
+.padding {
+	padding: 25px;
+}
+.title {
+	font-size: 25pt;
+	font-weight: bold;
+	font-style: normal;
+	letter-spacing: 0px;
+	color: #7ed321;
+}
+.separator {
+	padding-bottom: 50px;
+}
+.text {
+	font-size: 12pt;
+	font-weight: normal;
+	font-style: normal;
+	letter-spacing: 0px;
+}

@@ -1,0 +1,21 @@
+.containerField {
+	display: flex;
+	flex-direction: row;
+	padding-bottom: 4px;
+	text-decoration-line: none;
+}
+.textKey {
+	font-size: 14pt;
+	font-weight: '500';
+	font-style: normal;
+	letter-spacing: 0px;
+	text-decoration-line: none;
+	padding-right: 3px;
+}
+.textValue {
+	font-size: 14pt;
+	font-style: normal;
+	letter-spacing: 0px;
+	color: #808080;
+	text-decoration-line: none;
+}

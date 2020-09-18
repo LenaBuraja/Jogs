@@ -1,37 +1,19 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
 
 const Input = ({label, value, onChange}: {label: string, value: string | number, onChange: (text: string) => void}) => {
 
 	return (
-		<View>
-			<Text style={localeStyles.label}>{label}</Text>
-			<View style={localeStyles.inputContainer}>
-				<TextInput
+		<div>
+			<div className='label'>{label}</div>
+			<div className='inputContainer'>
+				<input
 					value={value.toString()}
-					onChangeText={onChange}
-					keyboardType='decimal-pad'
+					onChange={(event) => onChange(event.target.value)}
+					type='decimal-pad'
 				/>
-			</View>
-		</View>
+			</div>
+		</div>
 	);
 };
 
-export { Input };
-
-const localeStyles = StyleSheet.create({
-	inputContainer: {
-		backgroundColor: '#fff',
-		borderColor: '#888',
-		borderRadius: 7,
-		borderStyle: "solid",
-		borderWidth: 1,
-		padding: 10,
-		minWidth: '75%',
-	},
-	label: {
-		color: '#000',
-		fontWeight: 'normal',
-		paddingVertical: 5,
-	},
-});
+export default Input;

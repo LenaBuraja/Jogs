@@ -1,0 +1,26 @@
+.containerHeader {
+	padding: 20px;
+	padding-right: 25px;
+	padding-left: 25px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.icons {
+	display: flex;
+	flex-direction: row;
+}
+.paddingRight {
+	padding-right: 40px;
+}
+.image {
+	height: 37px;
+	width: 98px;
+	transition: contain;
+}
+.iconMenu {
+	height: 25px;
+	transition: contain;
+	cursor: pointer;
+}
