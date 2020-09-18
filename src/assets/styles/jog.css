@@ -6,6 +6,7 @@
 	justify-content: center;
 	margin-top: 35px;
 	padding: 13px;
+	cursor: pointer;
 }
 .container {
 	height: 80%;

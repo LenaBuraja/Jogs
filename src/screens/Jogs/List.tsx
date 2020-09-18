@@ -68,6 +68,7 @@ const ListJogsComponent: React.FunctionComponent<ListJogsComponentProps> = (prop
 										setDateEnd(undefined);
 										props.setFiltered(false);
 									}}
+									className='iconCloseFilter'
 								/>
 							</div>
 							: undefined
