@@ -23,11 +23,11 @@ const HeaderLineComponent: React.FunctionComponent<HeaderComponentProps> = (prop
 
 	useEffect(() => {
 		setIsMenuScreen(history.location.pathname === RoutePath.MENU);
-	}, [props]);
+	}, [props, history.location.pathname]);
 
 	return (
 		<div className='containerHeader' style={{ backgroundColor: isMenuScreen ? '#fff' : '#7ed321'}}>
-			<img src={isMenuScreen ? LogoGreen : LogoWhite} className='image' />
+			<img src={isMenuScreen ? LogoGreen : LogoWhite} className='image' alt=''/>
 			<div className='icons'>
 				{
 					history.location.pathname === RoutePath.JOGS
@@ -35,7 +35,7 @@ const HeaderLineComponent: React.FunctionComponent<HeaderComponentProps> = (prop
 							onClick={() => props.setFiltered(!filtered)}
 							className='paddingRight'
 						>
-							<img src={IconFilter} className='iconMenu' />
+							<img src={IconFilter} className='iconMenu' alt='' />
 						</div>
 					: undefined
 				}
@@ -44,7 +44,7 @@ const HeaderLineComponent: React.FunctionComponent<HeaderComponentProps> = (prop
 					? <div
 							onClick={() => isMenuScreen ? history.goBack() : history.push('/menu')}
 						>
-							<img src={isMenuScreen ? IconClose : IconMenu} className='iconMenu' />
+							<img src={isMenuScreen ? IconClose : IconMenu} className='iconMenu' alt='' />
 						</div>
 					: undefined
 				}

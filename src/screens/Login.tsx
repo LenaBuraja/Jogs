@@ -21,7 +21,7 @@ const LoginComponent: React.FunctionComponent<LoginComponentProps> = (props) => 
 	return (
 		<>
 			<div className='containerLogin'>
-				<img src={BearHead} className='imageBear' />
+				<img src={BearHead} className='imageBear' alt='' />
 					<div
 						className='buttonLogin'
 						onClick={async () => {

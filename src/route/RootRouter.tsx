@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom'; 
 import { Login, Info, Menu, ListJogs, CreateOrUpdateJog } from '../screens';
 import { connect } from 'react-redux';

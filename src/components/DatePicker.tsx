@@ -13,7 +13,7 @@ const DatePickerField = ({label, value, onChange}: {label: string, value?: strin
 		if (date) {
 			onChange(date?.toISOString());
 		}
-	}, [date]);
+	}, [date, onChange]);
 
 	return (
 		<div>

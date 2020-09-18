@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Input, DatePickerField } from '../../components';
-import { PATH, ROUTE_DATA } from '../../helpers/path';
 import { useParams, Link, useHistory, withRouter } from 'react-router-dom';
 import IconClose from '../../assets/images/cancel@2x.png';
 import { IJog } from '../../model';
@@ -43,7 +42,7 @@ const CreateJogsComponent: React.FunctionComponent<CreateJogsComponentProps> = (
 			date: date ? new Date(date).toISOString() : '',
 			distance: distance ? distance : 0
 		}) ? history.goBack() : undefined;
-	}, [date, time, distance, PATH, ROUTE_DATA]);
+	}, [date, time, distance, history, props]);
 
 	const updateJog = useCallback(async () => {
 		if(!date || id === undefined) {
@@ -59,14 +58,14 @@ const CreateJogsComponent: React.FunctionComponent<CreateJogsComponentProps> = (
 				user_id: user_id ? user_id : '0',
 			}
 		}) ? history.goBack() : undefined;
-	}, [date, time, distance, PATH, ROUTE_DATA]);
+	}, [date, time, distance, history, props, id, user_id]);
 
 	return (
 		<>
 			<div className='container'>
 				<div className='form'>
 					<Link to='/jogs' className='icon' >
-						<img src={IconClose} />
+						<img src={IconClose} alt='' />
 					</Link>
 					<Input
 						label='Distance'

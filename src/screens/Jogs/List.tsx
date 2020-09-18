@@ -26,7 +26,7 @@ const ListJogsComponent: React.FunctionComponent<ListJogsComponentProps> = (prop
 
 	useEffect(() => {
 		props.updateJogs();
-	}, []);
+	}, [props]);
  
 	const renderItem = ({jog}: {jog: IJog}) => (<Item key={jog.id} item={jog} />);
 
@@ -37,7 +37,7 @@ const ListJogsComponent: React.FunctionComponent<ListJogsComponentProps> = (prop
 					jogs.length === 0
 					? <div className='listJogs emotyList'>
 						<div className='nothingContainer'>
-							<img src={iconNothing} className='imageNothing' />
+							<img src={iconNothing} className='imageNothing' alt='' />
 							<div className='textNothing colorGrey paddingTop30'>Nothing is there</div>
 						</div>
 						<Link
@@ -69,6 +69,7 @@ const ListJogsComponent: React.FunctionComponent<ListJogsComponentProps> = (prop
 										props.setFiltered(false);
 									}}
 									className='iconCloseFilter'
+									alt=''
 								/>
 							</div>
 							: undefined
@@ -80,12 +81,13 @@ const ListJogsComponent: React.FunctionComponent<ListJogsComponentProps> = (prop
 							<img
 								src={iconAdd}
 								className='iconAdd'
+								alt=''
 							/>
 						</Link>
 						{
 							jogs.filter((jog) => {
-								return (!dateStart
-								|| (jog.date >= new Date(dateStart).getTime())
+								return ((!dateStart
+								|| jog.date >= new Date(dateStart).getTime())
 								&& (!dateEnd || jog.date <= new Date(dateEnd).getTime()))
 							}).map(jog => renderItem({jog}))
 						}

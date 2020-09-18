@@ -13,7 +13,7 @@ const Item = ({item}: {item: IJog}) => {
 			to={`/jogs/${item.id}`}
 			className='selectJog'
 		>
-				<img src={IconRun} className='imageJog' />
+				<img src={IconRun} className='imageJog' alt='' />
 				<div>
 					<div className='containerItem'>
 						<div className='textDate'>{`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`}</div>
